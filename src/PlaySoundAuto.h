@@ -13,14 +13,13 @@
 class PlaySoundAuto : public PlaySound {
     
 public:
+    void autoPlay(int mili, float BPM, float margin);
+    PlaySoundAuto(){};
+    PlaySoundAuto(string musicName, int nxt, float x){mySound.loadSound(musicName), flct = x, nextTime = nxt;};
+private:
     int nextTime;
     float flct; //ゆらぎ
     void intermittentChaos(); //間欠カオス
-    PlaySoundAuto(){};
-    PlaySoundAuto(string musicName, int nxt, float x){mySound.loadSound(musicName), isOn = true; flct = x, nextTime = nxt;};
-private:
-    
-    
 };
 
 #endif /* PlaySoundAuto_h */

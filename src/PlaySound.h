@@ -15,11 +15,9 @@
 class PlaySound {
 
 public:
-    vector<string> soundNames;
-    bool isOn;
     ofSoundPlayer mySound; //ofSoundクラスをインスタンス化
     PlaySound(){};
-    PlaySound(string musicName){mySound.loadSound(musicName), isOn = true;};
+    PlaySound(string musicName){mySound.loadSound(musicName);};
     void play();
 private:
     

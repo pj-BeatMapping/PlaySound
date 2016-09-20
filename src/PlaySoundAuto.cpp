@@ -26,3 +26,15 @@ void PlaySoundAuto::intermittentChaos(){ //間欠カオス
     
     
 }
+
+void PlaySoundAuto::autoPlay(int mili, float BPM, float margin){
+    if(nextTime<mili){
+        
+        int f_over_one = (0.5 - flct)*BPM*margin/60*1000;
+        nextTime += BPM/60.0*1000 + f_over_one;
+        intermittentChaos();
+        play();
+        
+        printf("1 %d, %d, %f, %f\n",mili,nextTime,(1+margin*(flct-0.5))*BPM,flct);
+    }
+}
