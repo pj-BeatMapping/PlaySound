@@ -10,4 +10,19 @@
 #define PlaySound_h
 
 
+#include "ofMain.h"
+
+class PlaySound {
+
+public:
+    vector<string> soundNames;
+    bool isOn;
+    ofSoundPlayer mySound; //ofSoundクラスをインスタンス化
+    PlaySound(){};
+    PlaySound(string musicName){mySound.loadSound(musicName), isOn = true;};
+    void play();
+private:
+    
+
+};
 #endif /* PlaySound_h */

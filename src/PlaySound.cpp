@@ -6,4 +6,9 @@
 //
 //
 
-#include "PlaySound.hpp"
+#include "PlaySound.h"
+#include "ofApp.h"
+
+void PlaySound::play(){
+    mySound.play();
+}

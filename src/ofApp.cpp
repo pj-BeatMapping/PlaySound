@@ -3,10 +3,27 @@
 int nextTime;
 int cnt = 0;
 float x = 0.3;
+PlaySound ps;
+PlaySoundAuto psa1;
+PlaySoundAuto psa2;
 
 void ofApp::setup(){
-    mySound.loadSound("BA_Modern_Fapping[GI].wav"); //サウンドファイルの読込み
+    //mySound.loadSound("BA_Modern_Fapping[GI].wav"); //サウンドファイルの読込み
     nextTime = BPM/60.0*1000;
+    
+    soundNames.push_back("BA_Modern_Fapping[GI].wav");
+    soundNames.push_back("LD_Epic_Lead[AS].wav");
+    soundNames.push_back("LD_Epic_Lead[AS]DS.wav");
+    soundNames.push_back("SY_PopSuperSaw[GS]DS.wav");
+    soundNames.push_back("SY_SAMsPissed[SD]DS.wav");
+    soundNames.push_back("SY_Shot_Dirt_Stab[IM].wav");
+    soundNames.push_back("SY_Space_Bach[SN].wav");
+    soundNames.push_back("SY_Stereoid[SD].wav");
+    
+    //どの音を鳴らすかはsoundNamesの番号で指定
+    ps = *new PlaySound(soundNames[0]); //人間の心拍
+    psa1 = *new PlaySoundAuto(soundNames[3],BPM/60.0*1000 + (0.5 - x)*BPM*margin/60*1000, x);// AIの心拍1
+    psa2 = *new PlaySoundAuto(soundNames[6],70/60.0*1000 + (0.5 - 0.7)*70*margin/60*1000, 0.7);// AIの心拍2
 }
 
 
@@ -14,15 +31,29 @@ void ofApp::setup(){
 //--------------------------------------------------------------
 void ofApp::update(){
 
-    
     int mili = ofGetElapsedTimeMillis();
-    if(nextTime<mili){
-        printf("%d, %d, %f\n",mili,nextTime,x);
-        int f_over_one = (0.5 - x)*BPM*margin/60*1000;
-        nextTime += BPM/60.0*1000 + f_over_one;
-        mySound.play(); //サウンド再生開始
+    
+    //ここを増やせば良い
+    if(psa1.nextTime<mili){
+        
+        int f_over_one = (0.5 - psa1.flct)*BPM*margin/60*1000;
+        psa1.nextTime += BPM/60.0*1000 + f_over_one;
         cnt++;
-        intermittentChaos();
+        psa1.intermittentChaos();
+        psa1.play();
+        
+        printf("1 %d, %d, %f, %f\n",mili,psa1.nextTime,(1+margin*(psa2.flct-0.5))*BPM,psa1.flct);
+    }
+    
+    if(psa2.nextTime<mili){
+        
+        int f_over_one = (0.5 - psa2.flct)*BPM*margin/60*1000;
+        psa2.nextTime += BPM/60.0*1000 + f_over_one;
+        cnt++;
+        psa2.intermittentChaos();
+        psa2.play();
+        
+        printf("2 %d, %d, %f, %f\n",mili,psa2.nextTime,(1+margin*(psa2.flct-0.5))*70, psa2.flct);
     }
 }
 
@@ -50,6 +81,10 @@ void ofApp::intermittentChaos(){ //間欠カオス
     else if(x >= 0.5) x = x + 2*(1-x)*(1-x);
     
     
+}
+
+string ofApp::getSoundName(int num){
+    return soundNames[num];
 }
 
 //--------------------------------------------------------------

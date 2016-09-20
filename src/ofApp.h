@@ -1,11 +1,18 @@
 
 
 #include "ofMain.h"
+#include "PlaySoundAuto.h"
+#include "PlaySound.h"
+
+
 
 class ofApp : public ofBaseApp {
     
     const float BPM = 80;
     const float margin = 0.2;
+    
+    vector<string> soundNames;
+
     
 public:
     void setup();
@@ -15,6 +22,7 @@ public:
     
     void intermittentChaos();
     
+    string getSoundName(int num);
     
     void keyPressed  (int key);
     void keyReleased(int key);
@@ -24,5 +32,5 @@ public:
     void mouseReleased(int x, int y, int button);
     void windowResized(int w, int h);
     
-    ofSoundPlayer mySound; //ofSoundクラスをインスタンス化
+    //ofSoundPlayer mySound; //ofSoundクラスをインスタンス化
 };
